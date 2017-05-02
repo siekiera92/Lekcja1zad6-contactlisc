@@ -57,12 +57,19 @@ function onError(contactError) {
 };
 
 function contctList(){
-// find all contacts with 'Bob' in any name field
-var options      = new ContactFindOptions();
-options.filter   = "a";
-options.multiple = true;
-options.desiredFields = [navigator.contacts.fieldType.id];
-options.hasPhoneNumber = true;
-var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
-navigator.contacts.find(fields, onSuccess, onError, options);
+		navigator.contacts.find(
+        [navigator.contacts.fieldType.displayName],
+        gotContacts,
+        errorHandler);
+}
+
+function errorHandler(e) {
+    console.log("errorHandler: "+e);
+}
+
+function gotContacts(c) {
+    console.log("gotContacts, number of results "+c.length);
+    for(var i=0, len=c.length; i<len; i++) {
+        console.dir(c[i]);
+    }
 }
